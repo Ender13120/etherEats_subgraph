@@ -1,0 +1,48 @@
+specVersion: 0.0.5
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: EtherEats
+    network: mumbai
+    source:
+      address: "0x03B99A03bd4b73E5c4FAb00C523A17C250BA7700"
+      abi: EtherEats
+      startBlock: 40431110
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - CustomerReputationIncreased
+        - DelivererReputationDecreased
+        - DelivererReputationIncreased
+        - OrderAccepted
+        - OrderCancelled
+        - OrderCompleted
+        - OrderCreated
+        - OwnershipTransferred
+        - TokensSlashed
+      abis:
+        - name: EtherEats
+          file: EtherEats/abis/EtherEats.json
+      eventHandlers:
+        - event: CustomerReputationIncreased(indexed address,uint256)
+          handler: handleCustomerReputationIncreased
+        - event: DelivererReputationDecreased(indexed address,uint256)
+          handler: handleDelivererReputationDecreased
+        - event: DelivererReputationIncreased(indexed address,uint256)
+          handler: handleDelivererReputationIncreased
+        - event: OrderAccepted(uint256,address)
+          handler: handleOrderAccepted
+        - event: OrderCancelled(uint256,address)
+          handler: handleOrderCancelled
+        - event: OrderCompleted(uint256)
+          handler: handleOrderCompleted
+        - event: OrderCreated(uint256,address,bytes)
+          handler: handleOrderCreated
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: TokensSlashed(indexed address,uint256)
+          handler: handleTokensSlashed
+      file: EtherEats/EtherEats.wasm
